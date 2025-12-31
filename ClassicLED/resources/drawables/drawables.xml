@@ -1,0 +1,39 @@
+<drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <bitmap id="Dig0" filename="0.png" />
+    <bitmap id="Dig1" filename="1.png" />
+    <bitmap id="Dig2" filename="2.png" />
+    <bitmap id="Dig3" filename="3.png" />
+    <bitmap id="Dig4" filename="4.png" />
+    <bitmap id="Dig5" filename="5.png" />
+    <bitmap id="Dig6" filename="6.png" />
+    <bitmap id="Dig7" filename="7.png" />
+    <bitmap id="Dig8" filename="8.png" />
+    <bitmap id="Dig9" filename="9.png" />
+    <bitmap id="Dot" filename="dot.png" />
+    <bitmap id="SingleDot" filename="singleDot.png" />
+    <bitmap id="Dig0g" filename="0g.png" />
+    <bitmap id="Dig1g" filename="1g.png" />
+    <bitmap id="Dig2g" filename="2g.png" />
+    <bitmap id="Dig3g" filename="3g.png" />
+    <bitmap id="Dig4g" filename="4g.png" />
+    <bitmap id="Dig5g" filename="5g.png" />
+    <bitmap id="Dig6g" filename="6g.png" />
+    <bitmap id="Dig7g" filename="7g.png" />
+    <bitmap id="Dig8g" filename="8g.png" />
+    <bitmap id="Dig9g" filename="9g.png" />
+    <bitmap id="Dotg" filename="dotg.png" />
+    <bitmap id="SingleDotg" filename="singleDotg.png" />
+    <bitmap id="DDig0" filename="dotled0.png" />
+    <bitmap id="DDig1" filename="dotled1.png" />
+    <bitmap id="DDig2" filename="dotled2.png" />
+    <bitmap id="DDig3" filename="dotled3.png" />
+    <bitmap id="DDig4" filename="dotled4.png" />
+    <bitmap id="DDig5" filename="dotled5.png" />
+    <bitmap id="DDig6" filename="dotled6.png" />
+    <bitmap id="DDig7" filename="dotled7.png" />
+    <bitmap id="DDig8" filename="dotled8.png" />
+    <bitmap id="DDig9" filename="dotled9.png" />
+    <bitmap id="DDot" filename="dotledcolon.png" />
+    <bitmap id="DSingleDot" filename="dotledsingledot.png" />
+    <bitmap id="LauncherIcon" filename="launcher_icon.svg" dithering="none" />
+</drawables>
