@@ -9,7 +9,7 @@
     <bitmap id="Dig7" filename="7.png" />
     <bitmap id="Dig8" filename="8.png" />
     <bitmap id="Dig9" filename="9.png" />
-    <bitmap id="Dot" filename="dot.png" />
+    <bitmap id="Colon" filename="colon.png" />
     <bitmap id="SingleDot" filename="singleDot.png" />
     <bitmap id="Dig0g" filename="0g.png" />
     <bitmap id="Dig1g" filename="1g.png" />
@@ -21,7 +21,7 @@
     <bitmap id="Dig7g" filename="7g.png" />
     <bitmap id="Dig8g" filename="8g.png" />
     <bitmap id="Dig9g" filename="9g.png" />
-    <bitmap id="Dotg" filename="dotg.png" />
+    <bitmap id="Colong" filename="colong.png" />
     <bitmap id="SingleDotg" filename="singleDotg.png" />
     <bitmap id="DDig0" filename="dotled0.png" />
     <bitmap id="DDig1" filename="dotled1.png" />
@@ -33,7 +33,7 @@
     <bitmap id="DDig7" filename="dotled7.png" />
     <bitmap id="DDig8" filename="dotled8.png" />
     <bitmap id="DDig9" filename="dotled9.png" />
-    <bitmap id="DDot" filename="dotledcolon.png" />
+    <bitmap id="DColon" filename="dotledcolon.png" />
     <bitmap id="DSingleDot" filename="dotledsingledot.png" />
     <bitmap id="LauncherIcon" filename="launcher_icon.svg" dithering="none" />
 </drawables>

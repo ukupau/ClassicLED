@@ -17,6 +17,9 @@ class ClassicLEDView extends WatchUi.WatchFace {
     private var xd as Dictionary<Symbol, Number> = {};
     private var yd as Dictionary<Symbol, Number> = {};
 
+    private var dc_width as Number = 0;
+    private var dc_height as Number = 0;
+
     private var battx as Number = 0;
     private var batty as Number = 0;
     private var battdx as Number = 0;
@@ -37,49 +40,10 @@ class ClassicLEDView extends WatchUi.WatchFace {
 
     // Load your resources here
     function onLayout(dc as Dc) as Void {
-        // Load some of the red resources to get dimensions
-        digits[0] = loadResource(Rez.Drawables.Dig0);
-        digits[colon] = loadResource(Rez.Drawables.Dot);
-        digits[dot] = loadResource(Rez.Drawables.SingleDot);
 
-        var dx1 = 16; // spacing between two hour digits and two minute digits
-        var dx3 = 20; // spacing between hour units and second dot
-        var dx4 = 54; // spacing between hour units and minute tens
-        var dy = 16;  // vertical offset of dots
-        var dc_width = dc.getWidth();
-        var dc_height = dc.getHeight();
-        var dig_width = digits[0].getWidth();
-        var dig_height = digits[0].getHeight();
-        var dot_height = digits[colon].getHeight();
-
-        da_width = 4 * dig_width + 2 * dx1 + dx4;  // full width of 4 digits. 4 digit widths + 2 tens/units spacings + 1 hours/minutes spacing
-        da_height = dig_height;
-
-        var x = (dc_width - da_width) / 2;  // center horizontally - left side spacing
-        var y = (dc_height - da_height) / 2;  // center vertically - top side spacing
-
-        xd[:h1] = x;  // position hour tens
-        xd[:h2] = xd[:h1] + dig_width + dx1;  // position hour units, offset from hour tens
-        xd[:d2] = xd[:h2] + dig_width + dx3;  // position second dot, offset from hour units
-        xd[:m1] = xd[:h2] + dig_width + dx4;  // position minute tens, offset from hour units
-        xd[:m2] = xd[:m1] + dig_width + dx1;  // position minute units, offset from minute tens
-
-        yd[:h1] = y;
-        yd[:h2] = y;
-        yd[:d2] = y + da_height - dot_height - dy;  // position second dot, offset vertically (digit y + digit height - dot height - dy)
-        yd[:m1] = y;
-        yd[:m2] = y;
-
-        // Battery indicator offset from the bottom
-        batty = dc_height - digits[dot].getHeight() - 25;
-
-        // Calc battery indicator X positions
-        var batt_width = 140;
-        battx = (dc_width - batt_width) / 2; // Left and right margin
-        // Spacing between 5 dots
-        var spacingx = (batt_width - 5 * digits[dot].getWidth()) / 4;
-        // X offset between each dot
-        battdx = digits[dot].getWidth() + spacingx;
+        // Dimensions of the full screen
+        dc_width = dc.getWidth();
+        dc_height = dc.getHeight();
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -98,9 +62,10 @@ class ClassicLEDView extends WatchUi.WatchFace {
             digits[7] = loadResource(Rez.Drawables.Dig7);
             digits[8] = loadResource(Rez.Drawables.Dig8);
             digits[9] = loadResource(Rez.Drawables.Dig9);
-            digits[colon] = loadResource(Rez.Drawables.Dot);
+            digits[colon] = loadResource(Rez.Drawables.Colon);
             digits[dot] = loadResource(Rez.Drawables.SingleDot);
-        } else {
+        } 
+        if (getSetting("color", 0) == 1) {
             // Green
             digits[0] = loadResource(Rez.Drawables.Dig0g);
             digits[1] = loadResource(Rez.Drawables.Dig1g);
@@ -112,9 +77,11 @@ class ClassicLEDView extends WatchUi.WatchFace {
             digits[7] = loadResource(Rez.Drawables.Dig7g);
             digits[8] = loadResource(Rez.Drawables.Dig8g);
             digits[9] = loadResource(Rez.Drawables.Dig9g);
-            digits[colon] = loadResource(Rez.Drawables.Dotg);
+            digits[colon] = loadResource(Rez.Drawables.Colong);
             digits[dot] = loadResource(Rez.Drawables.SingleDotg);
         }
+        if (getSetting("color", 0) == 2) {
+            // Dots display
             digits[0] = loadResource(Rez.Drawables.DDig0);
             digits[1] = loadResource(Rez.Drawables.DDig1);
             digits[2] = loadResource(Rez.Drawables.DDig2);
@@ -125,8 +92,49 @@ class ClassicLEDView extends WatchUi.WatchFace {
             digits[7] = loadResource(Rez.Drawables.DDig7);
             digits[8] = loadResource(Rez.Drawables.DDig8);
             digits[9] = loadResource(Rez.Drawables.DDig9);        
-            digits[colon] = loadResource(Rez.Drawables.DDot);
+            digits[colon] = loadResource(Rez.Drawables.DColon);
             digits[dot] = loadResource(Rez.Drawables.DSingleDot);
+        }
+
+        var dx1 = 16; // spacing between tens and units digits
+        var dx3 = 20; // spacing between hour units and colon
+        var dx4 = 54; // spacing between hour units and minute tens
+        var dy = 16;  // vertical offset of dots
+        var dig_width = digits[0].getWidth();
+        var dig_height = digits[0].getHeight();
+        var dot_height = digits[colon].getHeight();
+
+        // Size of the drawable area
+        da_width = 4 * dig_width + 2 * dx1 + dx4;  // full width of 4 digits. 4 digit widths + 2 tens/units spacings + 1 hours/minutes spacing
+        da_height = dig_height;
+
+        // Position of drawable area on screen
+        var x = (dc_width - da_width) / 2;  // left side margin. Calc: (screen width - drawable area width) / 2
+        var y = (dc_height - da_height) / 2;  // top margin. Calc: (screen height - drawable area height) / 2
+
+        // Calc X and Y positions of each digit and colon
+        xd[:h1] = x;  // position hour tens
+        xd[:h2] = xd[:h1] + dig_width + dx1;  // position hour units, offset from hour tens
+        xd[:c1] = xd[:h2] + dig_width + dx3;  // position colon, offset from hour units
+        xd[:m1] = xd[:h2] + dig_width + dx4;  // position minute tens, offset from hour units
+        xd[:m2] = xd[:m1] + dig_width + dx1;  // position minute units, offset from minute tens
+
+        yd[:h1] = y;
+        yd[:h2] = y;
+        yd[:c1] = y + da_height - dot_height - dy;  // position second dot, offset vertically (digit y + digit height - dot height - dy)
+        yd[:m1] = y;
+        yd[:m2] = y;
+
+        // Battery indicator offset from the bottom
+        batty = dc_height - digits[dot].getHeight() - 25;
+
+        // Calc battery indicator X positions
+        var batt_width = 140;
+        battx = (dc_width - batt_width) / 2; // Left and right margin
+        // Spacing between 5 dots
+        var spacingx = (batt_width - 5 * digits[dot].getWidth()) / 4;
+        // X offset between each dot
+        battdx = digits[dot].getWidth() + spacingx;        
     }
 
     // Update the view
@@ -157,7 +165,7 @@ class ClassicLEDView extends WatchUi.WatchFace {
         var in_aod_mode = in_sleep_mode
                           && System.getDeviceSettings().requiresBurnInProtection;
         if (in_aod_mode) {
-            dc.drawBitmap(xd[:d2], yd[:d2], digits[colon]);
+            dc.drawBitmap(xd[:c1], yd[:c1], digits[colon]);
             for (var i = 0; i < da_width; i += 2) {
                 var x = xd[:h1] + i + time.min % 2;
                 dc.drawLine(x, yd[:h1], x, yd[:h1] + da_height);
@@ -166,7 +174,7 @@ class ClassicLEDView extends WatchUi.WatchFace {
         else {
             // Blinking colon
             if (blinkState) {
-                dc.drawBitmap(xd[:d2], yd[:d2], digits[colon]);
+                dc.drawBitmap(xd[:c1], yd[:c1], digits[colon]);
             }
             blinkState = !blinkState;
 
